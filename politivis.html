@@ -6,6 +6,32 @@
 <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Inconsolata">
 <style>
+
+div.tooltip {
+  position: absolute;
+  text-align: center;
+  width: 90px;
+  height: 70px;
+  padding: 2px;
+  font: 12px sans-serif;
+  background: lightsteelblue;
+  border: 0px;
+  border-radius: 8px;
+  pointer-events: none;
+}
+
+.column {
+  float: left;
+  width: 500px;
+}
+
+/* Clear floats after the columns */
+.row:after {
+  content: "";
+  display: table;
+  clear: both;
+}
+
 body, html {
   height: 100%;
   font-family: "Inconsolata", sans-serif;
@@ -37,7 +63,7 @@ body, html {
       <a href="#menu" class="w3-button w3-block w3-black">COMPARE VIEW</a>
     </div>
     <div class="w3-col s3">
-      <a href="#where" class="w3-button w3-block w3-black">WHERE</a>
+      <a href="#where" class="w3-button w3-block w3-black">Addtional Information</a>
     </div>
   </div>
 </div>
@@ -52,7 +78,7 @@ body, html {
     <span style="color:black;font-size:40px";><br>Kyle Yee</span>
   </div>
   <div class="w3-display-bottomright w3-center w3-padding-large">
-    <span class="w3-text-white">Kyle Yee</span>
+    <span class="w3-text-white"></span>
   </div>
 </header>
 
@@ -76,128 +102,138 @@ body, html {
 <div class="w3-container" id="menu">
   <div class="w3-content" style="max-width:700px">
  
-    <h5 class="w3-center w3-padding-48"><span class="w3-tag w3-wide">THE MENU</span></h5>
+    <h5 class="w3-center w3-padding-48"><span class="w3-tag w3-wide">COMPARE VIEW</span></h5>
   
-    <div class="w3-row w3-center w3-card w3-padding">
-      <a href="javascript:void(0)" onclick="openMenu(event, 'Eat');" id="myLink">
-        <div class="w3-col s6 tablink">Eat</div>
-      </a>
-      <a href="javascript:void(0)" onclick="openMenu(event, 'Drinks');">
-        <div class="w3-col s6 tablink">Drink</div>
-      </a>
-    </div>
+<div class="row">
+  <div class="column" style="background-color:#aaa;">
+    <h2>2020</h2>
+    <p><img border="0" alt="2020map" src="2020hexmap.jpg" width="500" height="300"></p>
+    <p> President: <br/>Joseph Biden Jr.</p>
+    <p> Electoral Votes: <br/>Biden 306 - 232 Trump</p>
+    <P> Popular Vote: <br/>Carter 81,284,666 : 74,224,319 Ford</P>
 
-    <div id="Eat" class="w3-container menu w3-padding-48 w3-card">
+  </div>
+  <div class="column" style="background-color:#bbb;">
+    <h2>1976</h2>
+    <p><img border="0" alt="1976map" src="1976hexmap.png" width="500" height="300"></p>
+    <p> President: Jimmy Carter</p>
+    <p> Electoral Votes: Carter 297 - 240 Ford</p>
+    <P> Popular Vote: Carter 40,831,881 : 39,148,634 Ford</P>
 
-      <h5>Bread Basket</h5>
-      <p class="w3-text-grey">Assortment of fresh baked fruit breads and muffins 5.50</p><br>
-    
-      <h5>Honey Almond Granola with Fruits</h5>
-      <p class="w3-text-grey">Natural cereal of honey toasted oats, raisins, almonds and dates 7.00</p><br>
-    
-      <h5>Belgian Waffle</h5>
-      <p class="w3-text-grey">Vanilla flavored batter with malted flour 7.50</p><br>
-    
-      <h5>Scrambled eggs</h5>
-      <p class="w3-text-grey">Scrambled eggs, roasted red pepper and garlic, with green onions 7.50</p><br>
-    
-      <h5>Blueberry Pancakes</h5>
-      <p class="w3-text-grey">With syrup, butter and lots of berries 8.50</p>
-    </div>
 
-    <div id="Drinks" class="w3-container menu w3-padding-48 w3-card">
-      <h5>Coffee</h5>
-      <p class="w3-text-grey">Regular coffee 2.50</p><br>
-    
-      <h5>Chocolato</h5>
-      <p class="w3-text-grey">Chocolate espresso with milk 4.50</p><br>
-    
-      <h5>Corretto</h5>
-      <p class="w3-text-grey">Whiskey and coffee 5.00</p><br>
-    
-      <h5>Iced tea</h5>
-      <p class="w3-text-grey">Hot tea, except not hot 3.00</p><br>
-    
-      <h5>Soda</h5>
-      <p class="w3-text-grey">Coke, Sprite, Fanta, etc. 2.50</p>
-    </div>  
-    <img src="/w3images/coffeehouse2.jpg" style="width:100%;max-width:1000px;margin-top:32px;">
   </div>
 </div>
 
 <!-- Contact/Area Container -->
 <div class="w3-container" id="where" style="padding-bottom:32px;">
   <div class="w3-content" style="max-width:700px">
-    <h5 class="w3-center w3-padding-48"><span class="w3-tag w3-wide">WHERE TO FIND US</span></h5>
-        <svg width="600" height="500"></svg>
-
-    <script>
-
-   var svg = d3.select("svg"),
-        margin = 200,
-        width = svg.attr("width") - margin,
-        height = svg.attr("height") - margin;
-
-    svg.append("text")
-        .attr("transform", "translate(100, 0)") 
-        .attr("x", 50)
-        .attr("y", 50)
-        .attr("font-size", "24px")
-        .text("1976 California Candidates")
-
-
-    var yScale = d3.scaleLinear().range([height, 0]);
-    var xScale = d3.scaleBand().range([0, width]).padding(0.4); 
-    
-    var container_g = svg.append("g")
-        .attr("transform",
-            "translate(" + 100 + ", " + 100 + ")");
-
-
-    d3.csv("excel1976California.csv").then(data =>{
-
-        xScale.domain(data.map(function(d) { return d.candidate; }));
-
-        yScale.domain([0, 20210113]);
-
-        container_g.selectAll(".bar")
-            .data(data)
-            .enter().append("rect")
-            .attr("class", "bar")
-            .style("font","5px")
-            .attr("x", function(d) { return xScale(d.candidate); })  
-            .attr("y", function(d) { return yScale(d.candidatevotes); }) 
-            .attr("width", xScale.bandwidth()) 
-            .attr("height", function(d) { return height - yScale(d.candidatevotes); }); 
-
-        container_g.append("g")
-            .attr("transform", "translate(0," + height + ")")
-            .style("font","8px times")
-            .call(d3.axisBottom(xScale))
-            .append("text")
-            .attr("y", height - 250) 
-            .attr("x", width - 200) 
-            .attr("stroke", "black")
-            .attr("font-size", "16px")
-            .text("Candidate");
-
+    <h5 class="w3-center w3-padding-48"><span class="w3-tag w3-wide">Additional Information</span></h5>
         
-        container_g.append("g")
-            .call(d3.axisLeft(yScale).tickFormat(function(d){
-                return d;
-            })
-                .ticks(10))
-            .append("text")
-            .attr("transform", "rotate(-90)")
-            .attr("y", 15) 
-            .attr("x", 0) 
-            .attr("dy", "-5.1em")
+
+    <script src="https://d3js.org/d3.v6.min.js"></script>
+<div id="my_dataviz"></div>
+<script>
+
+// set the dimensions and margins of the graph
+const margin = {top: 10, right: 30, bottom: 30, left: 90},
+    width = 460 - margin.left - margin.right,
+    height = 400 - margin.top - margin.bottom;
+
+// append the svg object to the body of the page
+const svg = d3.select("#my_dataviz")
+  .append("svg")
+    .attr("width", width + margin.left + margin.right)
+    .attr("height", height + margin.top + margin.bottom)
+  .append("g")
+    .attr("transform", `translate(${margin.left},${margin.top})`);
+
+var formatTime = d3.timeFormat("%Y");
+
+var div = d3.select("body").append("div")
+    .attr("class", "tooltip")
+    .style("opacity", 0);
+
+//Read the data
+d3.csv("totalvotes.csv",
+
+  // When reading the csv, I must format variables:
+  function(d){
+    return { date : d3.timeParse("%Y")(d.year), value : d.totalvote }
+  }).then(
+
+  // Now I can use this dataset:
+  function(data) {
+
+    // Add X axis --> it is a date format
+    const x = d3.scaleTime()
+      .domain(d3.extent(data, function(d) { return d.date; }))
+      .range([ 0, width ]);
+    svg.append("g")
+      .attr("transform", `translate(0, ${height})`)
+      .call(d3.axisBottom(x));
+      svg.append("text")
+            .attr("y", height +30)
+            .attr("x", width -175)
             .attr("stroke", "black")
             .attr("font-size", "16px")
-            .text("Candidate Votes"); 
-    });
- </script>
-    </form>
+            .text("Year");
+
+
+    // Add Y axis
+    const y = d3.scaleLinear()
+      .domain([0, d3.max(data, function(d) { return +d.value; })])
+      .range([ height, 0 ]);
+    svg.append("g")
+      .call(d3.axisLeft(y));
+
+    // Add the line
+    svg.append("path")
+      .datum(data)
+      .attr("fill", "none")
+      .attr("stroke", "steelblue")
+      .attr("stroke-width", 1.5)
+      .attr("d", d3.line()
+        .x(function(d) { return x(d.date) })
+        .y(function(d) { return y(d.value) })
+        )
+     svg.append("g")
+      .call(d3.axisLeft(y));
+      svg.append("text")
+        .attr("transform", "rotate(-90)")
+        .attr("y", 10)
+        .attr("x", -200)
+        .attr("dy", "-5.1em")
+        .attr("stroke", "black")
+        .attr("font-size", "16px")
+        .text("Total Votes");
+
+
+
+
+      //Insert Circles
+  svg.selectAll("dot")
+     .data(data)
+   .enter().append("circle")
+     .attr("r", 5)
+     .attr("cx", function(d) { return x(d.date); })
+     .attr("cy", function(d) { return y(d.value); })
+     .on("mouseover", function(event,d) {
+       div.transition()
+         .duration(200)
+         .style("opacity", .9);
+       div.html("Total number of votes: "+d.value + "<br/>"+"<br/>" + "Year:" + formatTime(d.date))
+         .style("left", (event.pageX) + "px")
+         .style("top", (event.pageY - 28) + "px");
+       })
+     .on("mouseout", function(d) {
+       div.transition()
+         .duration(500)
+         .style("opacity", 0);
+       });
+
+});
+</script>
+    
   </div>
 </div>
 
