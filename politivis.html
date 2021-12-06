@@ -221,6 +221,7 @@ d3.csv("totalvotes.csv",
      .attr("r", 6)
      .attr("cx", function(d) { return x(d.date); })
      .attr("cy", function(d) { return y(d.value); })
+    .attr("fill", "orange")
      .on("mouseover", function(event,d) {
        div.transition()
          .duration(200)
