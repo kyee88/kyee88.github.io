@@ -1,0 +1,184 @@
+<!doctype html>
+<html>
+<head>
+    <style>
+    .bar;
+    </style>
+    <script src="https://d3js.org/d3.v7.min.js"></script>
+<body>
+<svg width="600" height="500"></svg>
+<div id="my_dataviz"></div>
+<script>
+
+    var svg = d3.select("svg"),
+        margin = 200,
+        width = svg.attr("width") - margin,
+        height = svg.attr("height") - margin;
+
+    svg.append("text")
+        .attr("transform", "translate(100, 0)") 
+        .attr("x", 50)
+        .attr("y", 50)
+        .attr("font-size", "24px")
+        .text("2020 Alaska Candidates")
+
+
+
+
+    var yScale = d3.scaleLinear().range([height, 0]);
+    var xScale = d3.scaleBand().range([0, width]).padding(0.4); 
+    
+    var container_g = svg.append("g")
+        .attr("transform",
+            "translate(" + 100 + ", " + 100 + ")");
+
+// Add a tooltip div. Here I define the general feature of the tooltip: stuff that do not depend on the data point.
+  // Its opacity is set to 0: we don't see it by default.
+  const tooltip = d3.select("#my_dataviz")
+    .append("div")
+    .style("opacity", 0)
+    .attr("class", "tooltip")
+    .style("background-color", "white")
+    .style("border", "solid")
+    .style("border-width", "1px")
+    .style("border-radius", "5px")
+    .style("padding", "10px")
+
+
+
+  // A function that change this tooltip when the user hover a point.
+  // Its opacity is set to 1: we can now see it. Plus it set the text and position of tooltip depending on the datapoint (d)
+  const mousemove = function(event, d) {
+    tooltip
+      .style("opacity", 1)
+  }
+
+  const mouseover = function(event, d) {
+    tooltip
+      .html(`Total votes for ${d.candidate} : ${d.candidatevotes}`+"<br>"+`They got ${Math.round(d.candidatevotes/d.totalvotes *100)}% of the vote`)
+      .style("left", (event.x)/2 + "px") // It is important to put the +90: other wise the tooltip is exactly where the point is an it creates a weird effect
+      .style("top", (event.y)/2 + "px")
+  }
+
+  // A function that change this tooltip when the leaves a point: just need to set opacity to 0 again
+  const mouseleave = function(event,d) {
+    tooltip
+      .transition()
+      .duration(200)
+      .style("opacity", 0)
+  }
+
+
+
+    d3.csv("excel2020Alaska.csv").then(data =>{
+
+        xScale.domain(data.map(function(d) { return d.candidate; }));
+        yScale.domain([0, 200000]);
+
+        container_g.selectAll(".bar")
+            .data(data)
+            .enter().append("rect")
+            .attr("class", "bar")
+            .style("font","5px")
+            .style("fill", function(d){
+              if(d.party_simplified == "DEMOCRAT"){
+                return "blue"
+              }
+              if(d.party_simplified=="REPUBLICAN"){
+                return "red"
+              }
+              else{
+                return "green"
+              }
+            })
+            .attr("x", function(d) { return xScale(d.candidate); })  
+            .attr("y", function(d) { return yScale(d.candidatevotes); }) 
+            .attr("width", xScale.bandwidth()) 
+            .attr("height", function(d) { return height - yScale(d.candidatevotes); })
+            .on("mouseover", mouseover )
+            .on("mousemove", mousemove )
+             .on("mouseleave", mouseleave )
+            ; 
+
+
+
+
+        container_g.append("g")
+            .attr("transform", "translate(0," + height + ")")
+            .style("font","8px times")
+            .call(d3.axisBottom(xScale))
+            .selectAll("text")
+             .style("text-anchor", "end")
+            .attr("dx", "-.8em")
+            .attr("dy", ".15em")
+            .attr("transform", "rotate(-65)")
+            .append("text")
+            .attr("y", height) 
+            .attr("x", width) 
+            .attr("stroke", "black")
+            .attr("font-size", "16px")
+            .text("Candidate");
+
+        
+        container_g.append("g")
+            .call(d3.axisLeft(yScale).tickFormat(function(d){
+                return d;
+            })
+                .ticks(10))
+            .append("text")
+            .attr("transform", "rotate(-90)")
+            .attr("y", 15) 
+            .attr("x", -50) 
+            .attr("dy", "-5.1em")
+            .attr("stroke", "black")
+            .attr("font-size", "16px")
+            .text("Candidate Votes"); 
+    });
+
+
+        svg.append("text")
+          .attr("x",400)
+          .attr("y",135)
+          .text("Parties")
+          .style("font-size", "16px")
+          .attr("alignment-baseline","middle")
+        svg.append("circle")
+        .attr("cx",400)
+        .attr("cy",150)
+        .attr("r",3)
+        .style("fill", "blue")
+        svg.append("text")
+        .attr("x",410)
+        .attr("y",150)
+        .text("Democrat")
+        .style("font-size","10px")
+        .attr("alignment-baseline","middle")
+
+        svg.append("circle")
+        .attr("cx",400)
+        .attr("cy",160)
+        .attr("r",3)
+        .style("fill", "red")
+        svg.append("text")
+        .attr("x",410)
+        .attr("y",160)
+        .text("Republican")
+        .style("font-size","10px")
+        .attr("alignment-baseline","middle")
+
+        svg.append("circle")
+        .attr("cx",400)
+        .attr("cy",170)
+        .attr("r",3)
+        .style("fill", "green")
+        svg.append("text")
+        .attr("x",410)
+        .attr("y",170)
+        .text("Other")
+        .style("font-size","10px")
+        .attr("alignment-baseline","middle")
+
+</script>
+
+</body>
+</html>
